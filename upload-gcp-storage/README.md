@@ -11,7 +11,7 @@
 
 ## Example
 
-其中認證 key在 [NAS](http://192.168.160.250:5000/d/f/537679534667903264) 上
+必須先建立[帳戶金鑰](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
 使用python為範例
 
