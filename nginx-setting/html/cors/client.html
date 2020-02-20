@@ -1,0 +1,41 @@
+<html>
+<header><title>Hello World</title></header>
+<script>
+var invocation = new XMLHttpRequest();
+var url = 'http://cors.com/cors/api.html';
+var body = '{send: "hello"}';
+
+function repuset(method){
+  set_content('');
+  invocation.onload = function () {
+    str = new Date();
+    str += '<br/>';
+    str += invocation.response;
+    set_content(str);
+  };
+
+  invocation.open(method, url, true);
+  invocation.setRequestHeader('X-PINGOTHER', 'pingpong');
+  invocation.setRequestHeader('Content-Type', 'application/xml');
+  invocation.send(body);
+}
+
+function set_content(r){
+  let content = document.getElementById('content');
+  content.innerHTML = r;
+}
+
+function hi() {
+  alert('hi');
+}
+</script>
+
+<body>
+<button onclick="hi()">hi</button>
+<button onclick="repuset('GET')">get</button>
+<button onclick="repuset('POST')">post</button>
+<button onclick="repuset('PUT')">put</button>
+<button onclick="repuset('DELETE')">delete</button>
+<div id="content"></div>
+</body>
+</html>

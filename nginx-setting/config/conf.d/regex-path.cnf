@@ -1,0 +1,16 @@
+server {
+    listen 80 default_server;
+    server_name _;
+
+    location ~ ^/(developer|user)/(.*)?(.*)$ {
+      root /usr/share/nginx/html;
+      index index.html;
+      add_header check-var "var1:$1, var2:$2";
+      return 200 "var1: $1, var2: $2, arges: $is_args$args";
+    }
+
+    location / {
+      root /usr/share/nginx/html;
+      index index.html;
+    }
+}
