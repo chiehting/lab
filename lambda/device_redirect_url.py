@@ -58,6 +58,8 @@ def replace_url(device, origin_url):
             new_url = origin_url.replace("://m", "://");
     return new_url
 
+
+### test data
 event = {
   "Records": [
     {
