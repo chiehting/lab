@@ -1,0 +1,221 @@
+{
+  "priority": 100,
+  "version": 1,
+  "_meta": {
+    "description": "kubernetes index template for filebeat"
+  },
+  "index_patterns" : [
+    "test-new*"
+  ],
+  "composed_of": [],
+  "template": {
+    "settings" : {
+      "index" : {
+        "lifecycle" : {
+          "name" : "kubernetes",
+          "rollover_alias" : "kubernetes"
+        },
+        "mapping" : {
+          "total_fields" : {
+            "limit" : "10000"
+          }
+        },
+        "refresh_interval" : "5s",
+        "number_of_replicas" : "0",
+        "max_docvalue_fields_search" : "100",
+        "query" : {
+          "default_field" : [
+            "message",
+            "kubernetes.*"
+          ]
+        }
+      }
+    },
+    "aliases" : {
+      "{index}-v1" : {}
+    },
+    "mappings" : {
+      "_routing" : {
+        "required" : false
+      },
+      "numeric_detection" : false,
+      "date_detection" : false,
+      "_meta" : {
+        "beat" : "filebeat",
+        "version" : "7.9.1"
+      },
+      "_source" : {
+        "excludes" : [ ],
+        "includes" : [ ],
+        "enabled" : true
+      },
+      "dynamic" : "strict",
+      "properties" : {
+        "@timestamp" : {
+          "type" : "date"
+        },
+        "host" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            }
+          }
+        },
+        "agent" : {
+          "type" : "object",
+          "properties" : {
+            "hostname" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            },
+            "name" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            },
+            "id" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            },
+            "ephemeral_id" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            },
+            "type" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            },
+            "version" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            }
+          }
+        },
+        "log" : {
+          "type" : "object",
+          "properties" : {
+            "file" : {
+              "type" : "object",
+              "properties" : {
+                "path" : {
+                  "ignore_above" : 1024,
+                  "type" : "keyword"
+                }
+              }
+            },
+            "offset" : {
+              "type" : "long"
+            }
+          }
+        },
+        "stream" : {
+          "ignore_above" : 1024,
+          "type" : "keyword"
+        },
+        "message" : {
+          "norms" : false,
+          "type" : "text"
+        },
+        "kubernetes" : {
+          "properties" : {
+            "labels" : {
+              "properties" : {
+                "app_kubernetes_io/instance" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                },
+                "app_kubernetes_io/name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                },
+                "pod-template-hash" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "container" : {
+              "properties" : {
+                "image" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                },
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "deployment" : {
+              "properties" : {
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "namespace" : {
+              "type" : "keyword",
+              "ignore_above" : 1024
+            },
+            "node" : {
+              "properties" : {
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "pod" : {
+              "properties" : {
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                },
+                "uid" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "replicaset" : {
+              "properties" : {
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            },
+            "statefulset" : {
+              "properties" : {
+                "name" : {
+                  "type" : "keyword",
+                  "ignore_above" : 1024
+                }
+              }
+            }
+          }
+        },
+        "ecs" : {
+          "type" : "object",
+          "properties" : {
+            "version" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            }
+          }
+        },
+        "input" : {
+          "type" : "object",
+          "properties" : {
+            "type" : {
+              "ignore_above" : 1024,
+              "type" : "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}
