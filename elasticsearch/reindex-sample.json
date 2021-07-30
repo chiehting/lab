@@ -1,0 +1,16 @@
+{
+  "source": {
+    "remote": {
+      "host": "http://172.31.79.120:9200",
+      "username": "admin",
+      "password": "password"
+    },
+    "index": "kubernetes-dev-7.9.1",
+    "query": {
+      "match_all": {}
+    }
+  },
+  "dest": {
+    "index": "kubernetes-dev-7.9.1"
+  }
+}
