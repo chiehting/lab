@@ -1,8 +1,10 @@
+import re
 def lambda_handler(event, context):
     request = event['Records'][0]['cf']['request']
     headers = request['headers']
     # 這邊直接濾掉s3的域名
-    origin_url = 'https://' + headers['host'][0]['value'].replace('.s3.amazonaws.com', '')
+    host = re.sub("\.s3.*", '', headers['host'][0]['value'])
+    origin_url = 'https://' + host
     origin_uri = request['uri']
     origin_querystring = '?' + request['querystring'] if request['querystring'] != '' else ''
     device = ''
@@ -44,20 +46,23 @@ def replace_url(device, origin_url):
     new_url = origin_url
     if device == 'mobile':
         if ("dev-" in origin_url):
-            new_url = origin_url.replace("dev-", "dev-m");
+            new_url = origin_url.replace("://dev-", "://dev-m");
         elif ("stage-" in origin_url):
-            new_url = origin_url.replace("stage-", "stage-m");
+            new_url = origin_url.replace("://stage-", "://stage-m");
+        elif ("uat-" in origin_url):
+            new_url = origin_url.replace("://uat-", "://uat-m");
         else:
             new_url = origin_url.replace("://", "://m");
     elif device == 'desktop':
         if ("dev-" in origin_url):
-            new_url = origin_url.replace("dev-m", "dev-");
+            new_url = origin_url.replace("://dev-m", "://dev-");
         elif ("stage-" in origin_url):
-            new_url = origin_url.replace("stage-m", "stage-");
+            new_url = origin_url.replace("://stage-m", "://stage-");
+        elif ("uat-" in origin_url):
+            new_url = origin_url.replace("://uat-m", "://uat-");
         else:
             new_url = origin_url.replace("://m", "://");
     return new_url
-
 
 ### test data
 event = {
@@ -76,10 +81,10 @@ event = {
             "host": [
               {
                 "key": "Host",
-                "value": "dev-test.com.s3.amazonaws.com"
+                "value": "dev-bobolove-baccarat.bb-bcgames.com.s3.ap-southeast-1.amazonaws.com"
               }
             ],
-            "cloudfront-is-mobile-viewer": [
+            "cloudfront-is-desktop-viewer": [
               {
                 "key": "Host",
                 "value": "true"
