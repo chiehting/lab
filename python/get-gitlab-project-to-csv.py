@@ -3,6 +3,11 @@ import json
 import re
 import csv
 
+# 設定參數
+gitalbAPI = 'https://gitlab.example.tw/api/v4/projects'
+payload = {'simple': 'true', 'archived': 'false', 'per_page': 50, 'page': 0}
+headers = {'PRIVATE-TOKEN': 'UzNy3D'}
+
 # 定義函式
 def getFrontendUrl(gitlabId, branch):
     url = gitalbAPI + '/' + str(gitlabId) + '/repository/files/.gitlab-ci.yml/raw?ref=' + branch + '&private_token=' + headers['PRIVATE-TOKEN']
@@ -33,11 +38,6 @@ def getServiceUrl(gitlabId, gitlabGroup, data):
         url = getBackendtUrl(data[gitlabId]['name'])
         data[gitlabId]['url'] = url
     return
-
-# 設定參數
-gitalbAPI = 'https://gitlab.example.tw/api/v4/projects'
-payload = {'simple': 'true', 'archived': 'false', 'per_page': 50, 'page': 0}
-headers = {'PRIVATE-TOKEN': 'UzNy3D'}
 
 # 取所有專案資料
 data = {}
@@ -88,7 +88,7 @@ frontend.insert(0, ['id', 'name', 'topics', 'description', 'url'])
 backend.insert(0, ['id', 'name', 'topics','description', 'url'])
 backend.insert(0, [''])
 
-file = open('data.csv', 'w+', newline ='')
+file = open('get-gitlab-project.csv', 'w+', newline ='')
 with file:
     write = csv.writer(file)
     write.writerows(frontend)
