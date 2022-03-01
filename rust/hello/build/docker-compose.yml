@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  gamefi-spl-service-api:
+    #image: rust:1.58.1-slim-buster
+    image: rust:1.58.1-slim-bullseye
+    #image: rust:1.58.1-alpine3.15
+    container_name: rust-helloworld
+    restart: always
+    environment:
+      - "RUST_BACKTRAC=full"
+    volumes:
+      - '../:/app'
+    tty: true
+    command: sh
+    network_mode: "host"
+
