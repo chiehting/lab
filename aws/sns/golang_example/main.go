@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aws_sdk_example/pkg"
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -23,5 +24,5 @@ func main() {
 
 	pkg.AwsSendEmail(sess, "test@gmail.com")
 	// pkg.AwsSendNotification(sess)
-	// pkg.AwsSendSms(sess, "+886111111111")
+	//pkg.AwsSendSms(sess, "+886111111111")
 }

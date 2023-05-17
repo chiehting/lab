@@ -24,6 +24,9 @@ rules:
 - apiGroups: ["","apps","networking.k8s.io","batch"]
   resources: ["secrets","serviceaccounts","services","deployments","ingresses","daemonsets","jobs"]
   verbs: ["list","get","create","update","patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["delete"]
 EOF
 }
 

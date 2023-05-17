@@ -80,9 +80,9 @@ func AwsSendEmail(sess client.ConfigProvider, recipient string) {
 // AwsSendNotification service is use aws sdk send notification to firebase.
 func AwsSendNotification(sess client.ConfigProvider) {
 	const (
-		topicArn       = "arn:aws:sns:ap-southeast-1:123456789123:test"
-		applicationARN = "arn:aws:sns:ap-southeast-1:123456789123:app/GCM/test"
-		token          = "cqOasdfio0123testtest1234561qaz@WSXhahahahahaMURrQBl1youasdlfeJIDFUPOISFnkld;MLKRJWEIORJFND:KLfBDnS-_WdqkNb2gymFKmLstypge-Zpk9k0nt_rBNtG"
+		topicArn       = "arn:aws:sns:ap-southeast-1::"
+		applicationARN = "arn:aws:sns:ap-southeast-1::app/GCM/abcd"
+		token          = "d_XLROUQRh"
 		userData       = ""
 	)
 
@@ -107,12 +107,13 @@ func AwsSendNotification(sess client.ConfigProvider) {
 		TopicArn:              aws.String(topicArn),
 	})
 
-	publishResult, _ := svc.Publish(&sns.PublishInput{
+	publishResult, err := svc.Publish(&sns.PublishInput{
 		Message:          aws.String(`{"default":"Sample fallback message","GCM":"{\"notification\":{\"body\":\"Sample message for Android endpoints\",\"title\":\"TitleTest\" }}"}`),
 		MessageStructure: aws.String("json"),
 		TopicArn:         aws.String(topicArn),
 	})
 
+	fmt.Println(err)
 	fmt.Println(*publishResult.MessageId)
 }
 

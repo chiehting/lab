@@ -47,7 +47,7 @@ $message = array(
   "GCM" => "{ \"notification\": { \"body\": \"Sample message for Android endpoints\", \"title\":\"TitleTest\" } }",
 );
 
-$topic = '';
+$topic = 'arn:aws:sns:ap-southeast-1::';
 
 try {
     $result = $SnSclient->publish([
