@@ -1,0 +1,24 @@
+ARG RepositoryUri
+FROM ${repositoryUri}golang:1.19.2-alpine3.16 as builder
+WORKDIR /app
+COPY . .
+RUN apk add build-base
+RUN mkdir -p ./bin && \
+ ls cmd | xargs -n1 -I '{}' go build -o ./bin/'{}'/main cmd/'{}'/main.go
+
+FROM ${RepositoryUri}alpine:3.15.0
+ARG commit
+ENV version=${commit}
+RUN addgroup --gid 2000 -S appgroup && \
+  adduser --uid 1000 -S appuser -G appgroup && \
+  apk update && apk upgrade && apk add --no-cache tzdata
+USER appuser
+COPY --chown=appuser:appgroup --from=builder /app/bin /home/appuser/cmd
+COPY --chown=appuser:appgroup --from=builder /app/views /home/appuser/views
+COPY --chown=appuser:appgroup --from=builder /app/locales /home/appuser/locales
+COPY --chown=appuser:appgroup --from=builder /app/build/entrypoint.sh /home/appuser/entrypoint.sh
+
+WORKDIR /home/appuser
+ENTRYPOINT ["/home/appuser/entrypoint.sh"]
+CMD ["main"]
+

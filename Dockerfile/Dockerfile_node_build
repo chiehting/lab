@@ -1,0 +1,12 @@
+ARG repositoryUri
+FROM ${repositoryUri}node:16.17.1-alpine3.16 as build
+WORKDIR /app
+COPY . .
+RUN apk add build-base
+RUN cd build && sh ./build.sh
+
+FROM ${repositoryUri}alpine:3.16.2
+COPY --from=build /app/build/var.sh /opt/var.sh
+COPY --from=build /app/dev /opt/dev
+WORKDIR /opt
+

@@ -117,6 +117,20 @@ func AwsSendNotification(sess client.ConfigProvider) {
 	fmt.Println(*publishResult.MessageId)
 }
 
+func DeleteRegisteredEndpoint(sess client.ConfigProvider, endpointArn string) (err error) {
+	deleteEndpointInput := &sns.DeleteEndpointInput{
+		EndpointArn: aws.String(endpointArn),
+	}
+
+	svc := sns.New(sess)
+	if _, err = svc.DeleteEndpoint(deleteEndpointInput); err != nil {
+		fmt.Println(deleteEndpointInput)
+	}
+
+	fmt.Println(err)
+	return
+}
+
 // AwsSendSms service is use aws sdk send sms.
 func AwsSendSms(sess client.ConfigProvider, phoneNumber string) {
 	svc := sns.New(sess)
