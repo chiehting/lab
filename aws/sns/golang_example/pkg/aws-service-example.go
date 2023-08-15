@@ -43,7 +43,7 @@ func AwsSendEmail(sess client.ConfigProvider, recipient string) {
 				Data:    aws.String("Amazon SES Test (AWS SDK for Go)"),
 			},
 		},
-		Source: aws.String("support@example.com"),
+		Source: aws.String("support@vinbrace.com"),
 		// Uncomment to use a configuration set
 		//ConfigurationSetName: aws.String(ConfigurationSet),
 	}
@@ -80,9 +80,9 @@ func AwsSendEmail(sess client.ConfigProvider, recipient string) {
 // AwsSendNotification service is use aws sdk send notification to firebase.
 func AwsSendNotification(sess client.ConfigProvider) {
 	const (
-		topicArn       = "arn:aws:sns:ap-southeast-1::"
-		applicationARN = "arn:aws:sns:ap-southeast-1::app/GCM/abcd"
-		token          = "d_XLROUQRh"
+		topicArn       = "arn:aws:sns:ap-southeast-1:849500532557:vinbrace"
+		applicationARN = "arn:aws:sns:ap-southeast-1:849500532557:app/GCM/vinbrace"
+		token          = "deBC4NKhReurEs74wPtEhz:APA91bEBEl1WqFr1_SBEzRoTtFzoN_WHGij8FHfi0vlexdvP4pa6MeuPowmcdtTW2HK1hsXOqsXoJ1Fu8VSc9bJlDTJxvVfBaquVVsm1dJ-j8XhvXIRM9Vv3rC4iLfTUIxqcwuW55-aC"
 		userData       = ""
 	)
 

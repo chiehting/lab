@@ -1,0 +1,12 @@
+FROM mysql:5.7.40-debian as builder
+
+FROM debian:sid-20221114-slim
+RUN apt update &&  apt -y upgrade && \
+apt install -y libatomic1 libncurses5-dev && \
+apt-get clean autoclean && \
+apt-get autoremove --yes && \
+rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+COPY --from=builder /usr/bin/mysql /usr/bin/
+COPY --from=builder /usr/bin/mysqlbinlog /usr/bin/
+

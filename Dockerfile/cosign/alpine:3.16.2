@@ -1,0 +1,7 @@
+FROM alpine:3.16.2
+RUN apk update && apk upgrade
+RUN apk add --no-cache python3 py3-pip ansible && \
+  pip3 install ansible-runner && \
+  rm -rf /var/cache/apk/*
+RUN apk add --no-cache cosign && \
+  rm -rf /var/cache/apk/*
