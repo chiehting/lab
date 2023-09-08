@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  python:
+    image: python:3.11.5-slim
+    ports:
+      - 80:80
+    tty: true
+    volumes:
+      - './server/tcp-socket-listen.py:/tcp-socket-listen.py'
+    command: 'python3 /tcp-socket-listen.py 80'
+
+networks:
+  default:
+    name: socket-listen
+
