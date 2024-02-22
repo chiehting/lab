@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  middleman:
+    image: python:3.11.5-slim
+    tty: true
+    volumes:
+      - './:/script'
+    command: 'bash -c "apt update && apt-get install netcat-traditional iputils-ping -y && bash"'
+    working_dir: '/script'
+    networks:
+      - frontend
+      - backend
+
+  node1:
+    image: python:3.11.5-slim
+    tty: true
+    volumes:
+      - './:/script'
+    command: 'bash -c "apt update && apt-get install netcat-traditional iputils-ping -y && bash"'
+    working_dir: '/script'
+    networks:
+      - frontend
+
+  node2:
+    image: python:3.11.5-slim
+    tty: true
+    volumes:
+      - './:/script'
+    command: 'bash -c "apt update && apt-get install netcat-traditional iputils-ping -y && bash"'
+    working_dir: '/script'
+    networks:
+      - backend
+
+networks:
+  frontend:
+    name: frontend
+  backend:
+    name: backend
