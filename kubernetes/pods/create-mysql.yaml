@@ -1,28 +1,51 @@
-apiVersion: v1
-kind: Pod
+apiVersion: batch/v1
+#kind: Pod
+kind: Job
 metadata:
   name: mysql
   labels:
     app: mysql
 spec:
-  containers:
-  - name: mysql
-    image: mysql:8.0.35-debian
-    stdin: true
-    tty: true
-    imagePullPolicy: IfNotPresent
-    command: ["sh"]
-#    volumeMounts:
-#      - mountPath: "/mysqlbackup"
-#        name: mysqlbackup
-#  volumes:
-#    - name: mysqlbackup
-#      persistentVolumeClaim:
-#        claimName: mysqlbackup
-  tolerations:
-    - key: "devops"
-      operator: "Exists"
-      effect: "NoSchedule"
-  nodeSelector:
-    devops: 'true'
+  ttlSecondsAfterFinished: 10
+  template:
+    metadata:
+      name: mysql
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: mysql
+        #image: mysql:8.0.35-debian
+        image: dhub.kubesre.xyz/mysql:8.0.35-debian
+        #stdin: true
+        #tty: true
+        imagePullPolicy: IfNotPresent
+        command: ["sleep","3600"]
+      #   volumeMounts:
+      #     - mountPath: "/mysqlbackup"
+      #       name: mysqlbackup
+      # volumes:
+      #   - name: mysqlbackup
+      #     persistentVolumeClaim:
+      #       claimName: mysqlbackup
+      tolerations:
+        - key: "devops"
+          operator: "Exists"
+          effect: "NoSchedule"
+        - key: "lindu-tech/server"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "devops"
+                    operator: In
+                    values:
+                      - "true"
+              - matchExpressions:
+                  - key: "lindu-tech/server"
+                    operator: In
+                    values:
+                      - "infra"
 
