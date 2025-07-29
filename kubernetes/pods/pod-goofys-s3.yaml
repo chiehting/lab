@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goofys-s3
+  labels:
+    app: goofys-s3
+spec:
+  enableServiceLinks: false
+  # terminationGracePeriodSeconds: 60 # 設定優雅退出時間（給足夠時間進行清理）
+  imagePullSecrets:
+    - name: regcred
+  containers:
+  - name: goofys
+    # image: 157578228094.dkr.ecr.ap-northeast-1.amazonaws.com/library/goofys:1.0.0
+    image: swr.cn-east-3.myhuaweicloud.com/fuwei-library/goofys:1.0.1
+    # imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      readOnlyRootFilesystem: true
+      privileged: true
+      capabilities:
+        add:
+        - SYS_ADMIN
+        - MKNOD
+        drop:
+        - ALL
+    env:
+    - name: AWS_ACCESS_KEY_ID
+      value: ""
+    - name: AWS_SECRET_ACCESS_KEY
+      value: ""
+    - name: AWS_REGION
+      value: ""
+    - name: HUAWEI_ACCESS_KEY_ID
+      value: ""
+    - name: HUAWEI_SECRET_ACCESS_KEY
+      value: ""
+    - name: HUAWEI_REGION
+      value: ""
+    volumeMounts:
+    - name: bucket-volume
+      mountPath: /mnt
+      mountPropagation: Bidirectional
+    command:
+      - "/usr/bin/dumb-init"
+      - "--"
+      - "goofys"
+      - "-o"
+      - "allow_other"
+      - "--use-content-type"
+      - "--debug_s3"
+      - "--debug_fuse"
+      - "--dir-mode=0666"
+      - "-f"
+      - "--endpoint=https://obs.cn-east-3.myhuaweicloud.com"
+      - "obsBucket"
+      - "/mnt"
+
+  - name: alpine
+    image: alpine:3.20.2
+    stdin: true
+    tty: true
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: bucket-volume
+      mountPath: /mnt
+      mountPropagation: HostToContainer
+
+  volumes:
+  - name: bucket-volume
+    emptyDir: {}
+
+#    volumeMounts:
+#    - name: hosts-volume
+#      mountPath: /etc/hosts
+#  volumes:
+#    - name: hosts-volume
+#      hostPath:
+#        path: /etc/hosts
+
+#  tolerations:
+#    - key: "devops"
+#      operator: "Exists"
+#      effect: "NoSchedule"
+#    - key: "lindu-tech/server"
+#      operator: "Exists"
+#      effect: "NoSchedule"
+#  nodeSelector:
+#    devops: 'true'
+  # nodeSelector:
+  #   kubernetes.io/hostname: 10.2.227.55
+
+# sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories

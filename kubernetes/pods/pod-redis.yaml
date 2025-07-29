@@ -9,8 +9,8 @@ spec:
     - name: regcred
   containers:
   - name: redis
-#    image: redis:6.2.14-alpine3.18
-    image: dhub.kubesre.xyz/redis:6.2.14-alpine3.18
+    image: redis:6.2.14-alpine3.18
+    #image: dhub.kubesre.xyz/redis:6.2.14-alpine3.18
     stdin: true
     tty: true
     imagePullPolicy: IfNotPresent
