@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>browser-tool</string>
+    <key>CFBundleIconFile</key>
+    <string>icon.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.chiehting.browsertool</string>
+    <key>CFBundleName</key>
+    <string>Browser Tool</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>LSUIElement</key>
+    <false/>
+    
+    <!-- URL Scheme 設定 -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.chiehting.browsertool</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>browsertool</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- 預設首頁設定 -->
+    <key>DefaultHomePage</key>
+    <string>http://localhost:3000</string>
+</dict>
+</plist>
