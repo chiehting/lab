@@ -2,9 +2,10 @@
 <plist version="1.0">
     <dict>
         <key>DefaultHomePage</key>
-        <string>http://localhost:3000</string>
+        <string>http://localhost:32834</string>
         <key>NSMicrophoneUsageDescription</key>
         <string>This application needs to access your microphone for audio capture</string>
+
         <key>CFBundlePackageType</key>
         <string>APPL</string>
         <key>CFBundleName</key>
@@ -63,5 +64,10 @@
           {{end}}
         </array>
         {{end}}
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsLocalNetworking</key>
+            <true/>
+        </dict>
     </dict>
 </plist>
