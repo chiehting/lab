@@ -1,0 +1,3 @@
+This is upload fils. Hello.
+Use the command put fine to clond
+curl -i -H "Content-Type: text/plain" -H "Host: test.obs.cn-east-3.myhuaweicloud.com" -X PUT --data-binary @tmp "https://test.obs.cn-east-3.myhuaweicloud.com/tmp?Expires=12345678&AccessKeyId=ABCDEFG&Signature=ylOTWSDKLICJKESAVICD%2B39xKeTY%3D"

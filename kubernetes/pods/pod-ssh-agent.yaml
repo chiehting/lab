@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ssh
+  labels:
+    app: ssh
+spec:
+  imagePullSecrets:
+  - name: regcred
+  containers:
+  - name: ssh
+    image: jenkins/ssh-agent:5.45.0-alpine3.20-jdk21
+    stdin: true
+    tty: true
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: JENKINS_AGENT_SSH_PUBKEY
+      value: ssh-ed25519 AAAA123456789 MacBook-Pro.local
+  tolerations:
+    - key: "devops"
+      operator: "Exists"
+      effect: "NoSchedule"
+    - key: "lindu-tech/server"
+      operator: "Exists"
+      effect: "NoSchedule"

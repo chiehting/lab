@@ -18,8 +18,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "open-webui",
-		Width:  1024,
-		Height: 1024,
+		Width:  1536,
+		Height: 1536,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
