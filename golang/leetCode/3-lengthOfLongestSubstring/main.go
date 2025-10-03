@@ -1,3 +1,9 @@
+/*
+ * @lc app=leetcode id=3 lang=golang
+ *
+ * [3] Longest Substring Without Repeating Characters
+ */
+
 package main
 
 import (
@@ -5,6 +11,7 @@ import (
 	"time"
 )
 
+// @lc code=start
 func lengthOfLongestSubstring(s string) int {
 	if len(s) < 2 {
 		return len(s)
@@ -14,27 +21,27 @@ func lengthOfLongestSubstring(s string) int {
 	var seen = make(map[rune]int)
 
 	for k, v := range s {
-		if idx, ok := seen[v]; ok && idx >= left {
-			left = idx + 1
+		if idx, ok := seen[v]; ok && idx > left {
+			left = idx
 		}
-		seen[v] = k
-
 		tmp := k - left + 1
 		if tmp > max {
 			max = tmp
 		}
+
+		seen[v] = k + 1
 	}
-	fmt.Println(max)
 	return max
 }
 
+// @lc code=end
 func main() {
 	t1 := time.Now()
-	lengthOfLongestSubstring("abcabcbb") // 3
-	lengthOfLongestSubstring("bbbbb")    // 1
-	lengthOfLongestSubstring(" ")        // 1
-	lengthOfLongestSubstring("au")       // 2
-	lengthOfLongestSubstring("dvdf")     // 3
+	fmt.Println(lengthOfLongestSubstring("abcabcbb")) // 3
+	fmt.Println(lengthOfLongestSubstring("abba"))     // 2
+	fmt.Println(lengthOfLongestSubstring("bbbbb"))    // 1
+	fmt.Println(lengthOfLongestSubstring(" "))        // 1
+	fmt.Println(lengthOfLongestSubstring("au"))       // 2
+	fmt.Println(lengthOfLongestSubstring("dvdf"))     // 3
 	fmt.Println(t1.Sub(time.Now()))
 }
-
