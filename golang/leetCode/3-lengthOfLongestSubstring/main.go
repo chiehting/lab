@@ -8,7 +8,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 // @lc code=start
@@ -17,31 +16,39 @@ func lengthOfLongestSubstring(s string) int {
 		return len(s)
 	}
 
-	var left, max int = 0, 0
+	var leftIdx, max int = 0, 0
 	var seen = make(map[rune]int)
 
-	for k, v := range s {
-		if idx, ok := seen[v]; ok && idx > left {
-			left = idx
+	for rightIdx, v := range s {
+		if findIdx, ok := seen[v]; ok && findIdx > leftIdx {
+			leftIdx = findIdx
 		}
-		tmp := k - left + 1
+		tmp := rightIdx - leftIdx + 1
 		if tmp > max {
 			max = tmp
 		}
 
-		seen[v] = k + 1
+		seen[v] = rightIdx + 1
 	}
 	return max
 }
 
 // @lc code=end
 func main() {
-	t1 := time.Now()
-	fmt.Println(lengthOfLongestSubstring("abcabcbb")) // 3
-	fmt.Println(lengthOfLongestSubstring("abba"))     // 2
-	fmt.Println(lengthOfLongestSubstring("bbbbb"))    // 1
-	fmt.Println(lengthOfLongestSubstring(" "))        // 1
-	fmt.Println(lengthOfLongestSubstring("au"))       // 2
-	fmt.Println(lengthOfLongestSubstring("dvdf"))     // 3
-	fmt.Println(t1.Sub(time.Now()))
+	testCase := []string{
+		"abcabcbb", //3
+		"abba",     //2
+		"bbbbb",    //1
+		" ",        //1
+		"au",       //2
+		"dvdf",     //3
+	}
+
+	for _, v := range testCase {
+		// t1 := time.Now()
+		fmt.Println(lengthOfLongestSubstring(v))
+		fmt.Println("---")
+		// fmt.Println(t1.Sub(time.Now()))
+	}
+
 }

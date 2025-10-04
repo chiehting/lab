@@ -2,7 +2,8 @@ package main
 
 import "fmt"
 
-func heapify(list []int, listLength int, idx int) {
+// 遞迴
+func recursive_heapify(list []int, listLength int, idx int) {
 	leftIdx, rightIdx, targetIdx := idx*2+1, idx*2+2, idx
 
 	if rightIdx < listLength && list[rightIdx] > list[targetIdx] {
@@ -16,6 +17,31 @@ func heapify(list []int, listLength int, idx int) {
 	if targetIdx != idx {
 		swap(list, idx, targetIdx)
 		heapify(list, listLength, targetIdx)
+	}
+}
+
+// 迭代
+func heapify(list []int, listLength int, idx int) {
+	stack := []struct{ n, idx int }{{listLength, idx}}
+	for len(stack) > 0 {
+		p := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		leftIdx, rightIdx, targetIdx := p.idx*2+1, p.idx*2+2, p.idx
+
+		if rightIdx < listLength && list[rightIdx] > list[targetIdx] {
+			targetIdx = rightIdx
+		}
+
+		if leftIdx < listLength && list[leftIdx] > list[targetIdx] {
+			targetIdx = leftIdx
+		}
+
+		if targetIdx != p.idx {
+			swap(list, p.idx, targetIdx)
+			// heapify(list, listLength, targetIdx)
+			stack = append(stack, struct{ n, idx int }{listLength, targetIdx})
+		}
 	}
 }
 
