@@ -1,0 +1,84 @@
+{
+  "name": "nw-builder",
+  "version": "4.15.0",
+  "description": "Build NW.js desktop applications for MacOS, Windows and Linux.",
+  "keywords": [
+    "NW.js",
+    "node-webkit",
+    "Desktop",
+    "Application"
+  ],
+  "author": {
+    "name": "Steffen Muller",
+    "url": "https://www.mllrsohn.com/"
+  },
+  "maintainers": [
+    {
+      "name": "Ayushman Chhabra",
+      "url": "https://ayushmanchhabra.com/"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "nw-builder Contributors",
+      "url": "https://github.com/nwutil/nw-builder/graphs/contributors"
+    }
+  ],
+  "license": "MIT",
+  "main": "./src/index.js",
+  "bin": {
+    "nwbuild": "./src/cli.js"
+  },
+  "types": "./src/index.d.ts",
+  "type": "module",
+  "files": [
+    "LICENSE",
+    "src"
+  ],
+  "homepage": "https://github.com/nwutils/nw-builder",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nwutils/nw-builder.git"
+  },
+  "scripts": {
+    "postinstall": "node ./src/postinstall.js",
+    "lint": "eslint ./src ./tests",
+    "lint:fix": "eslint --fix ./src ./tests",
+    "test": "vitest run --coverage",
+    "test:cov": "vitest --coverage.enabled true",
+    "demo:bld:linux": "node ./app/demo.linux.js",
+    "demo:bld:osx": "node ./app/demo.osx.js",
+    "demo:bld:win": "node ./app/demo.win.js",
+    "demo:exe:linux": "./app/out/linux/Demo",
+    "demo:exe:osx": "./app/out/osx/Demo.app/Contents/MacOS/Demo",
+    "demo:exe:win": "./app/out/win/Demo.exe",
+    "demo:cli": "nwbuild --mode=build --flavor=sdk --glob=false --cacheDir=./node_modules/nw --logLevel=debug --outDir=./app/out/linux --app.name=Demo --app.icon=./app/app/icon.png ./app/app"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "base-volta-off-of-nwjs": "^1.0.5",
+    "eslint": "^9.34.0",
+    "eslint-plugin-jsdoc": "^54.1.1",
+    "globals": "^16.3.0",
+    "nw": "^0.102.1",
+    "selenium-webdriver": "^4.35.0",
+    "vitest": "^3.0.7"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "axios": "^1.11.0",
+    "commander": "^14.0.0",
+    "glob": "^11.0.3",
+    "node-gyp": "^11.4.1",
+    "plist": "^3.1.0",
+    "resedit": "^2.0.3",
+    "semver": "^7.7.2",
+    "tar": "^7.4.3",
+    "yauzl-promise": "^4.0.0"
+  },
+  "volta": {
+    "node": "24.5.0",
+    "npm": "11.5.2"
+  }
+}
